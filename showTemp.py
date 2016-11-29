@@ -200,7 +200,8 @@ if __name__ == "__main__":
     DIGIT4=21     #40
 
 
-    btn = 17 #11
+    btn = 17 #11   temp or humi
+    btn2 =4  #7    get data again
     GPIO.setup(LED_A, GPIO.OUT)
     GPIO.setup(LED_B, GPIO.OUT)
     GPIO.setup(LED_C, GPIO.OUT)
@@ -215,6 +216,7 @@ if __name__ == "__main__":
     GPIO.setup(DIGIT4, GPIO.OUT)
     
     GPIO.setup(btn, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(btn2, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.output(DIGIT1, True)
     GPIO.output(DIGIT2, True)
     GPIO.output(DIGIT3, True)
@@ -224,7 +226,7 @@ if __name__ == "__main__":
         t = 0.004
         checkTempData()
         while True:
-            if (GPIO.input(btn) == 0 ):
+            if (GPIO.input(btn) == 1 ):
                 time.sleep(t)
                 showDigit(3,int(Temp[0]/10),False)
                 time.sleep(t)
@@ -236,7 +238,14 @@ if __name__ == "__main__":
                 time.sleep(t)
                 showDigit(4,int(Temp[1]%10),False)
                 time.sleep(t)
-    
+
+            if (GPIO.input(btn2) == 1):
+                pass
+            else:
+                GPIO.output(DIGIT4, True)
+                del Temp[:]
+                checkTempData()
+
     except KeyboardInterrupt:
         pass
     

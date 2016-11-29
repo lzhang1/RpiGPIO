@@ -71,8 +71,17 @@ def checkTempData():
     if check==tmp:  
         Temp.append(temperature)
         Temp.append(humidity)
+        print Temp
     else:
         checkTempData()
 
-checkTempData()
-print Temp
+
+try:
+    while True:
+        del Temp[:]
+        checkTempData()
+        time.sleep(1)
+except KeyboardInterrupt:
+    pass
+finally:
+    GPIO.cleanup()
